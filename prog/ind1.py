@@ -52,9 +52,7 @@ def save_poezd(file_name, poezd):
 
 
 def load_poezd(file_name):
-    directory = pathlib.Path.cwd().joinpath(file_name)
-    directory.replace(pathlib.Path.home().joinpath(file_name))
-    with directory.open(mode="r", encoding="utf-8") as fin:
+    with open(file_name, "r", encoding="utf-8") as fin:
         return json.load(fin)
 
 
