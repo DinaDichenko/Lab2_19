@@ -10,6 +10,9 @@ from colorama import Fore, Style
 
 
 def tree(directory):
+    """
+    Создание древа файлов
+    """
     str = ""
     for path in sorted(directory.rglob("*")):
         depth = len(path.relative_to(directory).parts)
@@ -23,11 +26,17 @@ def tree(directory):
 
 
 def size(filename):
+    """
+    Получение размера файла
+    """
     sez = pathlib.Path(filename).stat().st_size
     return sez
 
 
 def save(filename, lost):
+    """
+    Сохранить список поездов в json-файл
+    """
     # Открыть файл с заданным именем для записи.
     with open(filename, "w", encoding="utf-8") as fout:
         # Выполнить сериализацию данных в формат JSON.

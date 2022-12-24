@@ -8,13 +8,18 @@ import pathlib
 
 
 def get_poezd(poezd, name, no, time):
-    #получение данных о поезда
+    """
+    Добавить данные о поезде   
+    """
     poezd.append({"name": name, "no": no, "time": time})
     return poezd
 
 
 def list(poezd):
-    #вывод списка поездов
+    """
+    Отобразить список поездов
+    """
+    # проверить, что список поездов не пуст
     if poezd:
         line = "+-{}-+-{}-+-{}-+".format(
             "-" * 10,
@@ -37,7 +42,9 @@ def list(poezd):
 
 
 def select_poezd(poezd, nom):
-    #выбор поезда по номеру
+    """
+    Выбор поездов по номеру
+    """
     rezult = []
     for idx, po in enumerate(poezd, 1):
         if po["no"] == str(nom):
@@ -47,6 +54,9 @@ def select_poezd(poezd, nom):
 
 
 def save_poezd(file_name, poezd):
+    """
+    Сохранить список поездов в json-файл
+    """
     # Открыть файл с заданным именем для записи.
     with open(file_name, "w", encoding="utf-8") as fout:
         # Выполнить сериализацию данных в формат json.
@@ -56,6 +66,9 @@ def save_poezd(file_name, poezd):
 
 
 def load_poezd(file_name):
+    """
+    Считать список поездов из json-файла
+    """
     with open(file_name, "r", encoding="utf-8") as fin:
         return json.load(fin)
 
