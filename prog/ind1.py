@@ -8,12 +8,13 @@ import pathlib
 
 
 def get_poezd(poezd, name, no, time):
-
+    #получение данных о поезда
     poezd.append({"name": name, "no": no, "time": time})
     return poezd
 
 
 def list(poezd):
+    #вывод списка поездов
     if poezd:
         line = "+-{}-+-{}-+-{}-+".format(
             "-" * 10,
@@ -36,6 +37,7 @@ def list(poezd):
 
 
 def select_poezd(poezd, nom):
+    #выбор поезда по номеру
     rezult = []
     for idx, po in enumerate(poezd, 1):
         if po["no"] == str(nom):
@@ -45,7 +47,9 @@ def select_poezd(poezd, nom):
 
 
 def save_poezd(file_name, poezd):
+    # Открыть файл с заданным именем для записи.
     with open(file_name, "w", encoding="utf-8") as fout:
+        # Выполнить сериализацию данных в формат json.
         json.dump(poezd, fout, ensure_ascii=False, indent=4)
     directory = pathlib.Path.cwd().joinpath(file_name)
     directory.replace(pathlib.Path.home().joinpath(file_name))
@@ -57,6 +61,7 @@ def load_poezd(file_name):
 
 
 def main(command_line=None):
+    # Создаем основной парсер командной строки
     file_parser = argparse.ArgumentParser(add_help=False)
     file_parser.add_argument("filename", action="store", help="Имя файла данных")
 
@@ -82,6 +87,7 @@ def main(command_line=None):
         "display", parents=[file_parser], help="Панель отображения поездов"
     )
 
+    #Создать субпарсер для выбора поездов.
     select = subparsers.add_parser(
         "select", parents=[file_parser], help="Выбор поезда по номеру"
     )
@@ -96,6 +102,7 @@ def main(command_line=None):
 
     args = parser.parse_args(command_line)
 
+    # Загрущить список поездов из файла, если он существует
     is_dirty = False
     if os.path.exists(args.filename):
         poezd = load_poezd(args.filename)
@@ -106,6 +113,7 @@ def main(command_line=None):
         poezd = get_poezd(poezd, args.name, args.no, args.time)
         is_dirty = True
 
+    # Отобразить список поездов
     elif args.command == "display":
         list(poezd)
 
